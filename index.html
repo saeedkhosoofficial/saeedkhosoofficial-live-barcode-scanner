@@ -24,7 +24,7 @@ function setStatus(t,c){status.textContent=t;status.className=c||'';}
 function beep(){try{const C=window.AudioContext||window.webkitAudioContext;if(!C)return;const a=new C();const o=a.createOscillator(),g=a.createGain();o.type='sine';o.frequency.value=1200;g.gain.value=.22;o.connect(g);g.connect(a.destination);o.start();o.stop(a.currentTime+.12);setTimeout(()=>{try{a.close()}catch(e){}},220)}catch(e){}}
 function send(code){
  beep();setStatus('SCAN SUCCESS: '+code,'ok');
- try{if(window.opener&&!window.opener.closed){window.opener.postMessage({type:'IE_POS_BARCODE_SCAN',code:String(code)},'https://script.google.com');setTimeout(()=>window.close(),700);return;}}catch(e){}
+ try{if(window.opener&&!window.opener.closed){window.opener.postMessage({type:'IE_POS_BARCODE_SCAN',code:String(code)},'*');setTimeout(()=>window.close(),700);return;}}catch(e){}
  try{localStorage.setItem('IE_POS_BARCODE_SCAN',JSON.stringify({code:String(code),time:Date.now()}));}catch(e){}
 }
 async function stop(){running=false;locked=false;if(scanner){try{await scanner.stop()}catch(e){}try{await scanner.clear()}catch(e){}scanner=null;}}
